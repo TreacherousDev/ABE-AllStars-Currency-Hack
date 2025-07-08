@@ -30,7 +30,7 @@ This tool edits your player save file to give you **free Snoutlings**, to boost 
 
 ## Download
 
-- Prebuilt `.exe`: [Releases](loremipsursomethingsomething)
+- Prebuilt `.exe`: [Releases](https://github.com/TreacherousDev/ABE-AllStars-Snoutling-Hack/releases/tag/v0.1)
 - Or clone the repo and run the Python script directly.
 
 
