@@ -1,13 +1,13 @@
 # ABE-AllStars-Snoutling-Hack
-![image](https://github.com/user-attachments/assets/cd849cea-5cfb-4138-b0d8-a80e6e7b8353)
+![image](https://github.com/user-attachments/assets/e41ae34d-9ab1-4957-abab-483bbb64a313)
 
-A simple tool that generates **Snoutlings** for your current save file in **Angry Birds Epic All Stars**.
+A simple tool that generates **Currency** for your current save file in **Angry Birds Epic All Stars**.
 
 ---
 
 ##  What It Does
 
-This tool edits your player save file to give you **free Snoutlings**, to boost your progress so you can gaslight yourself into thinking you're actually good at the game.
+This tool edits your player save file to give you **free Currency**, to boost your progress so you can gaslight yourself into thinking you're actually good at the game.
 
 ---
 
@@ -16,7 +16,8 @@ This tool edits your player save file to give you **free Snoutlings**, to boost 
 1. Run the application
 2. Click **“Select File”** and choose your save file (`player`)
 3. Click **“Patch File”**
-4. Launch the game and enjoy being miserable
+4. Enter the amount of currency you want for: Lucky Coins, Snoutlings, Friendship Essences
+5. Launch the game and enjoy being miserable
 >  You can find the player file in AppData\LocalLow\Drippy Studios\All Stars\prefs. Make sure the game is **closed** when patching.
 
 ---
@@ -30,7 +31,7 @@ This tool edits your player save file to give you **free Snoutlings**, to boost 
 
 ## Download
 
-- Prebuilt `.exe`: [Releases](https://github.com/TreacherousDev/ABE-AllStars-Snoutling-Hack/releases/tag/v0.1)
+- Prebuilt `.exe`: [Releases](https://github.com/TreacherousDev/ABE-AllStars-Currency-Hack/releases/tag/v0.2)
 - Or clone the repo and run the Python script directly.
 
 
