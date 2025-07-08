@@ -1,4 +1,4 @@
-# ABE-AllStars-Snoutling-Hack
+# ABE AllStars Currency Hack
 ![image](https://github.com/user-attachments/assets/e41ae34d-9ab1-4957-abab-483bbb64a313)
 
 A simple tool that generates **Currency** for your current save file in **Angry Birds Epic All Stars**.
