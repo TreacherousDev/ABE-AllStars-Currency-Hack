@@ -20,6 +20,8 @@ This tool edits your player save file to give you **free Currency**, to boost yo
 5. Launch the game and enjoy being miserable
 >  You can find the player file in AppData\LocalLow\Drippy Studios\All Stars\prefs. Make sure the game is **closed** when patching.
 
+Please make a backup of your save file before patching, as some unknown bug may corrupt your save file. If this occurs, please open an issue with your backup player save file included and I'll try to find what's causing the issue.
+
 ---
 
 ## Requirements
