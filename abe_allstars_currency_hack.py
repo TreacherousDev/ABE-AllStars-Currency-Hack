@@ -177,3 +177,5 @@ patch_btn = ttk.Button(frame, text="Patch File", command=run_patch)
 patch_btn.pack(pady=(0, 5))
 
 root.mainloop()
+
+# to build, run this command in terminal at the script folder's directory: pyinstaller --onefile --noconsole abe_allstars_currency_hack.py
