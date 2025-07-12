@@ -31,7 +31,7 @@ This tool edits your player save file to give you **free Currency**, to boost yo
 
 ## Download
 
-- Prebuilt `.exe`: [Releases](https://github.com/TreacherousDev/ABE-AllStars-Currency-Hack/releases/tag/v0.2)
+- Prebuilt `.exe`: [Releases](https://github.com/TreacherousDev/ABE-AllStars-Currency-Hack/releases/tag/v0.3)
 - Or clone the repo and run the Python script directly.
 
 
