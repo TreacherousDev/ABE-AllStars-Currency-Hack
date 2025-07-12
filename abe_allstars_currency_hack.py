@@ -25,7 +25,6 @@ data_entries = [
     }
 ]
 
-
 XOR_MASK = 0xBA2E8BA  # encryption mask used by game, credits to heroic
 
 def encode_varint(value):
@@ -47,6 +46,12 @@ def decode_varint(data):
         shift += 7
     return None, 0
 
+# fixes corruption bug in 0.2
+def find_exact_key_block(binary, key_bytes, tag):
+    # Match pattern: 0A <len> <key_bytes> 10 01 18 <varint>
+    pattern = b'\x0A' + bytes([len(key_bytes)]) + key_bytes + b'\x10\x01' + bytes([tag])
+    return binary.find(pattern)
+
 def patch_file(file_path, values):
     try:
         with open(file_path, "r") as f:
@@ -58,23 +63,18 @@ def patch_file(file_path, values):
         binary = bytearray(base64.b64decode(b64_data))
 
         for entry in data_entries:
-            target_string = entry["key"]
+            key_bytes = entry["key"]
             varint_tag = entry["tag"]
             new_value = values.get(entry["label"])
             if new_value is None:
                 continue
 
-            pos = binary.find(target_string)
-            if pos == -1:
-                messagebox.showerror("Error", f"{entry['label']}: Code 1 (key not found)")
-                continue
-
-            tag_pos = binary.find(bytes([varint_tag]), pos + len(target_string))
+            tag_pos = find_exact_key_block(binary, key_bytes, varint_tag)
             if tag_pos == -1:
-                messagebox.showerror("Error", f"{entry['label']}: Code 2 (varint tag not found)")
+                messagebox.showerror("Error", f"{entry['label']}: Code 3 (exact key structure not found)")
                 continue
 
-            varint_start = tag_pos + 1
+            varint_start = tag_pos + len(b'\x0A') + 1 + len(key_bytes) + len(b'\x10\x01') + 1
             varint_bytes = binary[varint_start:varint_start + 10]
             current_value, length = decode_varint(varint_bytes)
 
@@ -83,7 +83,6 @@ def patch_file(file_path, values):
                 continue
 
             varint_end = varint_start + length
-
             binary[varint_start:varint_end] = encode_varint(new_value)
 
         with open(file_path, "w") as f:
@@ -118,19 +117,15 @@ def run_patch():
 
     values = {}
     for entry in data_entries:
-        target_string = entry["key"]
+        key_bytes = entry["key"]
         varint_tag = entry["tag"]
-        pos = binary.find(target_string)
-        if pos == -1:
-            messagebox.showerror("Error", f"{entry['label']}: Code 1 (key not found)")
-            continue
 
-        tag_pos = binary.find(bytes([varint_tag]), pos + len(target_string))
+        tag_pos = find_exact_key_block(binary, key_bytes, varint_tag)
         if tag_pos == -1:
-            messagebox.showerror("Error", f"{entry['label']}: Code 2 (varint tag not found)")
+            messagebox.showerror("Error", f"{entry['label']}: Code 3 (exact key structure not found)")
             continue
 
-        varint_start = tag_pos + 1
+        varint_start = tag_pos + len(b'\x0A') + 1 + len(key_bytes) + len(b'\x10\x01') + 1
         varint_bytes = binary[varint_start:varint_start + 10]
         current_value, length = decode_varint(varint_bytes)
 
@@ -144,7 +139,7 @@ def run_patch():
                 prompt=f"{entry['label']}\n\nCurrent value: {current_value}\nEnter new value:",
                 minvalue=0,
                 maxvalue=entry["max_value"],
-                parent=root 
+                parent=root
             )
             if value is not None:
                 values[entry['label']] = value
@@ -182,5 +177,3 @@ patch_btn = ttk.Button(frame, text="Patch File", command=run_patch)
 patch_btn.pack(pady=(0, 5))
 
 root.mainloop()
-
-# to build, run this command in terminal at the script folder's directory: pyinstaller --onefile --noconsole abe_allstars_currency_hack.py
