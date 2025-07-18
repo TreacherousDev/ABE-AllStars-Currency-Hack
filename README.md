@@ -1,5 +1,7 @@
 # ABE AllStars Currency Hack
 ![image](https://github.com/user-attachments/assets/e41ae34d-9ab1-4957-abab-483bbb64a313)
+<img width="566" height="265" alt="image" src="https://github.com/user-attachments/assets/6da48732-5237-46a9-984a-38de8e53bcd5" />
+
 
 A simple tool that generates **Currency** for your current save file in **Angry Birds Epic All Stars**.
 
