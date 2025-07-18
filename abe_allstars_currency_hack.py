@@ -91,12 +91,11 @@ def patch_file(file_path, values):
         messagebox.showerror("Error", f"An error occurred:\n{str(e)}")
 
 def find_default_save_file():
-    local_appdata = os.getenv("LOCALAPPDATA")
-    if not local_appdata:
-        return None
+    local_appdata = os.environ.get("LOCALAPPDATA") or os.path.expanduser("~\\AppData\\Local")
     locallow = local_appdata.replace("Local", "LocalLow")
     default_path = os.path.join(locallow, "Drippy Studios", "prefs", "player")
     return default_path if os.path.exists(default_path) else None
+
 
 # UI
 def select_file():
