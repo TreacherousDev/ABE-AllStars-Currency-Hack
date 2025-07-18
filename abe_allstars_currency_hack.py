@@ -46,9 +46,7 @@ def decode_varint(data):
         shift += 7
     return None, 0
 
-# fixes corruption bug in 0.2
 def find_exact_key_block(binary, key_bytes, tag):
-    # Match pattern: 0A <len> <key_bytes> 10 01 18 <varint>
     pattern = b'\x0A' + bytes([len(key_bytes)]) + key_bytes + b'\x10\x01' + bytes([tag])
     return binary.find(pattern)
 
@@ -92,9 +90,21 @@ def patch_file(file_path, values):
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred:\n{str(e)}")
 
+def find_default_save_file():
+    local_appdata = os.getenv("LOCALAPPDATA")
+    if not local_appdata:
+        return None
+    locallow = local_appdata.replace("Local", "LocalLow")
+    default_path = os.path.join(locallow, "Drippy Studios", "prefs", "player")
+    return default_path if os.path.exists(default_path) else None
+
 # UI
 def select_file():
-    file_path = filedialog.askopenfilename(title="Select 'player' File")
+    default_dir = os.path.dirname(find_default_save_file() or "")
+    file_path = filedialog.askopenfilename(
+        title="Select 'player' File",
+        initialdir=default_dir
+    )
     if file_path:
         file_var.set(file_path)
         file_label.configure(text=os.path.basename(file_path))
@@ -149,6 +159,7 @@ def run_patch():
 
     patch_file(file_path, values)
 
+# Main Window
 root = tk.Tk()
 root.title("ABE All Stars Currency Hack")
 root.geometry("340x200")
@@ -164,18 +175,25 @@ frame.pack(fill="both", expand=True)
 
 file_var = tk.StringVar()
 
+# Attempt to auto-detect save file
+default_path = find_default_save_file()
+file_label = None
+if default_path:
+    file_var.set(default_path)
+    file_label = ttk.Label(frame, text=os.path.basename(default_path), foreground="black")
+else:
+    file_label = ttk.Label(frame, text="No file selected", foreground="gray")
+
 title_label = ttk.Label(frame, text="ABE All Stars Currency Hack", font=("Segoe UI", 14, "bold"))
 title_label.pack(pady=(0, 10))
 
 select_btn = ttk.Button(frame, text="Select File", command=select_file)
 select_btn.pack(pady=(0, 5))
 
-file_label = ttk.Label(frame, text="No file selected", foreground="gray")
 file_label.pack(pady=(0, 10))
 
 patch_btn = ttk.Button(frame, text="Patch File", command=run_patch)
 patch_btn.pack(pady=(0, 5))
 
 root.mainloop()
-
-# to build, run this command in terminal at the script folder's directory: pyinstaller --onefile --noconsole abe_allstars_currency_hack.py
+#  to build: pyinstaller --onefile --noconsole abe_allstars_currency_hack.py
